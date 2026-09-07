@@ -3,7 +3,7 @@
 // YASMIM - 15 ANOS
 // ==========================================
 
-const convidados = [
+window.convidados = [
 
   // Núbia e família
   { nome: "Carlos", familia: "Núbia e família", grupo: "nubia" },
