@@ -9,6 +9,11 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyAYBh_xHUGuEGMjpHEOxBU-Nppc5ymum6g",
   authDomain: "yasmim-dc181.firebaseapp.com",
@@ -22,173 +27,294 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-console.log("Firebase conectado! 💙");
 
-const nomeInput = document.getElementById("nome");
-const buscarBtn = document.getElementById("buscarBtn");
-const resultado = document.getElementById("resultado");
+/* =========================
+   ABRIR CONVITE
+========================= */
+
+const abrirConvite = document.getElementById("abrirConvite");
+const abertura = document.getElementById("abertura");
+const convite = document.getElementById("convite");
+
+if (abrirConvite) {
+
+  abrirConvite.addEventListener("click", () => {
+
+    abertura.style.opacity = "0";
+
+    setTimeout(() => {
+
+      abertura.style.display = "none";
+      convite.classList.remove("escondido");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }, 600);
+
+  });
+
+}
+
+
+/* =========================
+   CONTAGEM REGRESSIVA
+========================= */
+
+function atualizarContagem() {
+
+  const agora = new Date();
+
+  let ano = agora.getFullYear();
+
+  let dataFesta = new Date(
+    ano,
+    11,
+    5,
+    20,
+    0,
+    0
+  );
+
+  /*
+    Se o dia 5 de dezembro deste ano já passou,
+    usamos o próximo ano.
+  */
+
+  if (agora >= dataFesta) {
+
+    dataFesta = new Date(
+      ano + 1,
+      11,
+      5,
+      20,
+      0,
+      0
+    );
+
+  }
+
+  const diferenca = dataFesta - agora;
+
+  const dias = Math.floor(
+    diferenca / (1000 * 60 * 60 * 24)
+  );
+
+  const horas = Math.floor(
+    (diferenca / (1000 * 60 * 60)) % 24
+  );
+
+  const minutos = Math.floor(
+    (diferenca / (1000 * 60)) % 60
+  );
+
+  const segundos = Math.floor(
+    (diferenca / 1000) % 60
+  );
+
+
+  const elementoDias =
+    document.getElementById("dias");
+
+  const elementoHoras =
+    document.getElementById("horas");
+
+  const elementoMinutos =
+    document.getElementById("minutos");
+
+  const elementoSegundos =
+    document.getElementById("segundos");
+
+
+  if (elementoDias) {
+    elementoDias.textContent =
+      String(dias).padStart(2, "0");
+  }
+
+  if (elementoHoras) {
+    elementoHoras.textContent =
+      String(horas).padStart(2, "0");
+  }
+
+  if (elementoMinutos) {
+    elementoMinutos.textContent =
+      String(minutos).padStart(2, "0");
+  }
+
+  if (elementoSegundos) {
+    elementoSegundos.textContent =
+      String(segundos).padStart(2, "0");
+  }
+
+}
+
+atualizarContagem();
+
+setInterval(atualizarContagem, 1000);
+
+
+/* =========================
+   FUNÇÕES DOS CONVIDADOS
+========================= */
 
 function normalizar(texto) {
+
   return texto
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
+
 }
 
-function idSeguro(texto) {
-  return normalizar(texto)
+
+function criarId(convidado) {
+
+  const nome = normalizar(convidado.nome)
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_|_$/g, "");
+
+  return `${convidado.grupo}_${nome}`;
+
 }
 
-async function verificarConfirmacao(convidado) {
 
-  const id = `${convidado.grupo}_${idSeguro(convidado.nome)}`;
+/* =========================
+   BUSCAR CONVIDADO
+========================= */
 
-  const referencia = doc(db, "confirmacoes", id);
-  const documento = await getDoc(referencia);
+const nomeInput =
+  document.getElementById("nome");
 
-  return documento.exists();
-}
+const buscarBtn =
+  document.getElementById("buscarBtn");
 
-async function confirmar(convidado, botao) {
+const resultado =
+  document.getElementById("resultado");
 
-  botao.disabled = true;
-  botao.textContent = "Confirmando...";
-
-  try {
-
-    const id = `${convidado.grupo}_${idSeguro(convidado.nome)}`;
-    const referencia = doc(db, "confirmacoes", id);
-
-    const existente = await getDoc(referencia);
-
-    if (existente.exists()) {
-
-      botao.textContent = "✓ Já confirmado";
-      botao.classList.add("confirmado");
-
-      return;
-    }
-
-    await setDoc(referencia, {
-      nome: convidado.nome,
-      familia: convidado.familia,
-      grupo: convidado.grupo,
-      confirmado: true,
-      data: new Date().toISOString()
-    });
-
-    botao.textContent = "✓ Presença confirmada!";
-    botao.classList.add("confirmado");
-
-  } catch (erro) {
-
-    console.error(erro);
-
-    botao.disabled = false;
-    botao.textContent = "Confirmar presença";
-
-    alert(
-      "Não foi possível confirmar agora. Verifique sua conexão e tente novamente."
-    );
-  }
-}
-
-async function mostrarResultado(nomeDigitado) {
-
-  resultado.innerHTML = "";
-
-  const busca = normalizar(nomeDigitado);
-
-  if (!busca) {
-
-    resultado.innerHTML = `
-      <p class="mensagem">
-        Digite seu nome para continuar.
-      </p>
-    `;
-
-    return;
-  }
-
-  const encontrados = window.convidados.filter(convidado =>
-    normalizar(convidado.nome).includes(busca)
-  );
-
-  if (encontrados.length === 0) {
-
-    resultado.innerHTML = `
-      <div class="mensagem">
-        <p>Não encontramos esse nome na lista.</p>
-        <small>Confira a escrita e tente novamente.</small>
-      </div>
-    `;
-
-    return;
-  }
-
-  resultado.innerHTML = `
-    <div class="lista-encontrados">
-      <h2>Encontramos:</h2>
-    </div>
-  `;
-
-  const lista = resultado.querySelector(".lista-encontrados");
-
-  for (const convidado of encontrados) {
-
-    const jaConfirmou = await verificarConfirmacao(convidado);
-
-    const item = document.createElement("div");
-    item.className = "convidado";
-
-    const nome = document.createElement("strong");
-    nome.textContent = convidado.nome;
-
-    const familia = document.createElement("small");
-    familia.textContent = convidado.familia;
-
-    const botao = document.createElement("button");
-
-    if (jaConfirmou) {
-
-      botao.textContent = "✓ Já confirmou";
-      botao.disabled = true;
-      botao.classList.add("confirmado");
-
-    } else {
-
-      botao.textContent = "Confirmar presença";
-
-      botao.addEventListener("click", () => {
-        confirmar(convidado, botao);
-      });
-    }
-
-    item.appendChild(nome);
-    item.appendChild(familia);
-    item.appendChild(botao);
-
-    lista.appendChild(item);
-  }
-}
 
 if (buscarBtn) {
 
-  buscarBtn.addEventListener("click", () => {
-    mostrarResultado(nomeInput.value);
-  });
+  buscarBtn.addEventListener("click", buscarConvidado);
+
 }
+
 
 if (nomeInput) {
 
   nomeInput.addEventListener("keydown", (evento) => {
 
     if (evento.key === "Enter") {
-      mostrarResultado(nomeInput.value);
+      buscarConvidado();
     }
 
   });
+
 }
+
+
+async function buscarConvidado() {
+
+  const nomeDigitado =
+    normalizar(nomeInput.value);
+
+
+  if (!nomeDigitado) {
+
+    resultado.innerHTML = `
+      <div class="mensagem">
+        Digite seu nome para encontrar seu convite.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const lista =
+    window.convidados || [];
+
+
+  const encontrados =
+    lista.filter((convidado) =>
+      normalizar(convidado.nome)
+        .includes(nomeDigitado)
+    );
+
+
+  if (encontrados.length === 0) {
+
+    resultado.innerHTML = `
+      <div class="mensagem">
+        Não encontramos seu nome na lista.
+        <br>
+        Confira a escrita e tente novamente.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  resultado.innerHTML = `
+    <div class="lista-encontrados">
+      <h2>Seu convite foi encontrado! 💙</h2>
+    </div>
+  `;
+
+
+  const listaResultado =
+    resultado.querySelector(".lista-encontrados");
+
+
+  for (const convidado of encontrados) {
+
+    const id =
+      criarId(convidado);
+
+
+    const referencia =
+      doc(db, "confirmacoes", id);
+
+
+    let confirmado = false;
+
+
+    try {
+
+      const documento =
+        await getDoc(referencia);
+
+      confirmado =
+        documento.exists();
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao verificar confirmação:",
+        erro
+      );
+
+    }
+
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "convidado";
+
+
+    card.innerHTML = `
+      <strong>${convidado.nome}</strong>
+
+      <small>
+        ${convidado.familia}
+      </small>
+    `;
+
+
+    const botao =
+      document.createElement("button");
