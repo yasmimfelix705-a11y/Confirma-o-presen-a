@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(180deg, #dcecff, #9fc5e8);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.convite {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilhos */
+.convite::before,
+.convite::after {
+  content: "✦";
+  position: absolute;
+  font-size: 35px;
+  color: rgba(255, 255, 255, 0.75);
+  animation: brilho 3s infinite ease-in-out;
+}
+
+.convite::before {
+  top: 15%;
+  left: 15%;
+}
+
+.convite::after {
+  bottom: 20%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+@keyframes brilho {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.monograma {
+  width: 75px;
+  height: 75px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  font-style: italic;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.pequeno {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(55px, 16vw, 95px);
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1;
+  text-shadow: 0 3px 10px rgba(40, 80, 120, 0.25);
+}
+
+.quinze {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  letter-spacing: 7px;
+  margin-top: 8px;
+}
+
+.linha {
+  width: 100px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 25px 0;
+}
+
+.frase {
+  font-size: 17px;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.data {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 2px;
+}
+
+.data strong {
+  font-size: 18px;
+}
+
+.data span {
+  font-size: 14px;
+}
+
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(330px, 90%);
+  margin-top: 35px;
+}
+
+.botoes a {
+  text-decoration: none;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  padding: 13px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}
+
+.botoes a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .convite {
+    padding: 25px 15px;
+  }
+
+  .monograma {
+    width: 65px;
+    height: 65px;
+    font-size: 38px;
+  }
+
+  .pequeno {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .frase {
+    font-size: 15px;
+  }
+
+  .botoes {
+    margin-top: 28px;
+  }
+}
