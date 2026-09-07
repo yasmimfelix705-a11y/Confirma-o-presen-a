@@ -1,44 +1,160 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yasmim • 15 anos</title>
+
+  <title>15 Anos Yasmim</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <main class="convite">
+  <!-- ABERTURA -->
+  <section id="abertura" class="abertura">
 
-    <div class="monograma">Y</div>
+    <div class="envelope">
 
-    <p class="pequeno">VOCÊ É MEU CONVIDADO ESPECIAL</p>
+      <div class="monograma-abertura">
+        Y
+      </div>
+
+      <p>Yasmim</p>
+
+      <button id="abrirConvite">
+        Toque para abrir
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONVITE -->
+  <main id="convite" class="convite escondido">
+
+    <div class="monograma">
+      Y
+    </div>
 
     <h1>Yasmim</h1>
 
-    <p class="quinze">15 ANOS</p>
-
-    <div class="linha"></div>
+    <h2>15 anos</h2>
 
     <p class="frase">
-      Uma noite especial merece<br>
-      pessoas especiais.
+      “Uma noite iluminada por sonhos, marcada por memórias
+      e cercada por pessoas especiais.”
     </p>
 
-    <div class="data">
-      <strong>05 DE DEZEMBRO</strong>
-      <span>ÀS 20:00</span>
-    </div>
 
-    <div class="botoes">
-      <a href="rsvp.html">💌 Confirmar presença</a>
-      <a href="#presentes">🎁 Lista de presentes</a>
-      <a href="#local">📍 Local da festa</a>
-    </div>
+    <a href="#confirmacao" class="botao-principal">
+      Confirmar presença
+    </a>
+
+
+    <!-- CONTAGEM REGRESSIVA -->
+
+    <section class="contagem">
+
+      <h3>Contagem regressiva</h3>
+
+      <div class="contador">
+
+        <div>
+          <strong id="dias">00</strong>
+          <span>Dias</span>
+        </div>
+
+        <div>
+          <strong id="horas">00</strong>
+          <span>Horas</span>
+        </div>
+
+        <div>
+          <strong id="minutos">00</strong>
+          <span>Minutos</span>
+        </div>
+
+        <div>
+          <strong id="segundos">00</strong>
+          <span>Segundos</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- UMA NOITE ESPECIAL -->
+
+    <section class="noite-especial">
+
+      <h3>Uma noite especial</h3>
+
+      <h4>✨ 15 anos Yasmim ✨</h4>
+
+      <p>
+        Uma celebração feita para guardar momentos
+        inesquecíveis ao lado de pessoas especiais.
+      </p>
+
+    </section>
+
+
+    <!-- CONFIRMAÇÃO -->
+
+    <section id="confirmacao" class="confirmacao">
+
+      <h3>Confirme sua presença</h3>
+
+      <p>
+        Digite seu nome ou o nome da família
+        para encontrar seu convite.
+      </p>
+
+      <div class="busca">
+
+        <input
+          type="text"
+          id="nome"
+          placeholder="Digite seu nome"
+          autocomplete="off"
+        >
+
+        <button id="buscarBtn">
+          Buscar convite
+        </button>
+
+      </div>
+
+      <div id="resultado"></div>
+
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section class="final">
+
+      <p>Com carinho,</p>
+
+      <h3>Yasmim</h3>
+
+      <p>
+        Obrigada por fazer parte desse momento tão especial 💙
+      </p>
+
+    </section>
 
   </main>
 
-  <script src="script.js"></script>
+
+  <script src="convidados.js"></script>
+
+  <script type="module" src="script.js"></script>
+
 </body>
+
 </html>
