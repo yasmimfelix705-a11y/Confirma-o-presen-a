@@ -4,172 +4,112 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  min-height: 100vh;
   font-family: Georgia, "Times New Roman", serif;
-  background: linear-gradient(180deg, #dcecff, #9fc5e8);
-  color: #ffffff;
+  background: #dcecf7;
+  color: #526d80;
   overflow-x: hidden;
 }
 
-.convite {
+/* =========================
+   ABERTURA
+========================= */
+
+.abertura {
   min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.9), transparent 30%),
+    linear-gradient(180deg, #eaf6fc 0%, #c9e2f2 100%);
+  position: relative;
+}
+
+.envelope {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px 20px;
-  position: relative;
-  overflow: hidden;
+  gap: 18px;
 }
 
-/* Brilhos */
-.convite::before,
-.convite::after {
-  content: "✦";
-  position: absolute;
-  font-size: 35px;
-  color: rgba(255, 255, 255, 0.75);
-  animation: brilho 3s infinite ease-in-out;
-}
-
-.convite::before {
-  top: 15%;
-  left: 15%;
-}
-
-.convite::after {
-  bottom: 20%;
-  right: 15%;
-  animation-delay: 1.5s;
-}
-
-@keyframes brilho {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-.monograma {
-  width: 75px;
-  height: 75px;
-  border: 2px solid rgba(255, 255, 255, 0.9);
+.monograma-abertura {
+  width: 105px;
+  height: 105px;
+  border: 1px solid #9bb8ca;
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 45px;
+  align-items: center;
+  font-size: 58px;
+  font-family: "Times New Roman", serif;
   font-style: italic;
-  margin-bottom: 20px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  color: #7895a8;
+  background: rgba(255,255,255,.35);
+  box-shadow: 0 8px 30px rgba(85,120,145,.12);
 }
 
-.pequeno {
-  font-family: Arial, sans-serif;
-  font-size: 11px;
+.envelope p {
+  font-size: 26px;
   letter-spacing: 3px;
-  margin-bottom: 12px;
+  color: #607d90;
 }
 
-h1 {
-  font-size: clamp(55px, 16vw, 95px);
-  font-weight: normal;
-  font-style: italic;
-  line-height: 1;
-  text-shadow: 0 3px 10px rgba(40, 80, 120, 0.25);
-}
-
-.quinze {
-  font-family: Arial, sans-serif;
-  font-size: 18px;
-  letter-spacing: 7px;
-  margin-top: 8px;
-}
-
-.linha {
-  width: 100px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.8);
-  margin: 25px 0;
-}
-
-.frase {
-  font-size: 17px;
-  line-height: 1.7;
-  font-style: italic;
-}
-
-.data {
-  margin-top: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  font-family: Arial, sans-serif;
-  letter-spacing: 2px;
-}
-
-.data strong {
-  font-size: 18px;
-}
-
-.data span {
-  font-size: 14px;
-}
-
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: min(330px, 90%);
-  margin-top: 35px;
-}
-
-.botoes a {
-  text-decoration: none;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+.envelope button {
+  border: 1px solid #9bb8ca;
+  background: rgba(255,255,255,.55);
+  color: #58758a;
+  padding: 13px 28px;
   border-radius: 30px;
-  padding: 13px 18px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(5px);
-  transition: 0.3s;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .3s;
 }
 
-.botoes a:hover {
-  background: rgba(255, 255, 255, 0.3);
+.envelope button:hover {
+  background: white;
   transform: translateY(-2px);
 }
 
-@media (max-width: 480px) {
-  .convite {
-    padding: 25px 15px;
-  }
 
-  .monograma {
-    width: 65px;
-    height: 65px;
-    font-size: 38px;
-  }
+/* =========================
+   CONVITE
+========================= */
 
-  .pequeno {
-    font-size: 9px;
-    letter-spacing: 2px;
-  }
-
-  .frase {
-    font-size: 15px;
-  }
-
-  .botoes {
-    margin-top: 28px;
-  }
+.convite {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.8), transparent 28%),
+    linear-gradient(180deg, #e7f4fb 0%, #d4eaf6 45%, #c5e0ef 100%);
+  text-align: center;
+  padding: 55px 20px 40px;
 }
+
+.escondido {
+  display: none;
+}
+
+.monograma {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border: 1px solid #9ab5c7;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 52px;
+  font-style: italic;
+  color: #7692a5;
+  background: rgba(255,255,255,.3);
+}
+
+.convite h1 {
+  font-size: clamp(42px,
